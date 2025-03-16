@@ -1,0 +1,26 @@
+# Python virtual environment
+venv/
+.env
+venv
+
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Playwright test artifacts
+playwright-report/
+test-results/
+screenshots/
+videos/
+traces/
+
+# Logs and temporary files
+*.log
+*.tmp
+*.cache
+
+# IDE and editor-specific files
+.vscode/
+.idea/
