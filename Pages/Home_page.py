@@ -20,7 +20,14 @@ class HomePage(BasePage):
         self.sort_option_high_to_low = "Price (high to low)"
         self.active_option = self.page.locator('//span[@class="active_option"]')
         self.product_names = self.page.locator('//div[@class="inventory_item_name "]')
+        self.product_descriptions = self.page.locator('//div[@class="inventory_item_desc"]')
         self.product_prices = self.page.locator('//div[@class="inventory_item_price"]')
+        self.add_to_cart_buttons = self.page.locator('//button[@class="btn btn_primary btn_small btn_inventory "]')
+        self.back_button_in_detail = self.page.locator('//button[@id="back-to-products"]')
+        self.product_name_in_detail = self.page.locator('//div[@data-test="inventory-item-name"]')
+        self.product_desc_in_detail = self.page.locator('//div[@data-test="inventory-item-desc"]')
+        self.product_price_in_detail = self.page.locator('//div[@class="inventory_details_price"]')
+        self.add_to_cart_button_in_detail = self.page.locator('//button[@id="add-to-cart"]')
 
     def verify_home_page_opened_correctly(self):
         expect(self.burger_menu).to_be_visible()
@@ -31,9 +38,9 @@ class HomePage(BasePage):
 
         for i in range(self.products.count()):
             expect(self.products.nth(i)).to_be_visible()
-            print(f"{i+1} - product is visisble")
+            print(f"\n<<{i+1} - product is visisble>>")
 
-        print("<<home page opened correctly>>")
+        print("\n<<home page opened correctly>>")
 
     def open_home_page(self):
         self.open_url(os.getenv("HOME_PAGE_URL"))
@@ -107,3 +114,15 @@ class HomePage(BasePage):
             assert product_name_list == expected_sorted_list
             print(f"\nactual: {product_name_list}")
             print(f"\nexpected: {expected_sorted_list}")
+
+    def matching_data_list_and_detail(self):
+        for i in range(self.products.count()):
+            name = self.product_names.nth(i).text_content()
+            desc = self.product_descriptions.nth(i).text_content()
+            price = self.product_prices.nth(i).text_content()
+            self.product_names.nth(i).click()
+            expect(self.product_name_in_detail).to_have_text(name)
+            expect(self.product_desc_in_detail).to_have_text(desc)
+            expect(self.product_price_in_detail).to_have_text(price)
+            print(f"\n<<{i+1} - maxsulot ma'lumotlari list va detailda bir xil>>")
+            self.back_button_in_detail.click()
