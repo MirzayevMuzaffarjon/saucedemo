@@ -25,7 +25,3 @@ def test_sort_product_list_z_to_a(logged_in_home_page):
 def test_list_data_match_with_detail_data(logged_in_home_page):
     logged_in_home_page.open_home_page()
     logged_in_home_page.matching_data_list_and_detail()
-
-
-
-
