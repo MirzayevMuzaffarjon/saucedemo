@@ -28,6 +28,7 @@ class HomePage(BasePage):
         self.product_desc_in_detail = self.page.locator('//div[@data-test="inventory-item-desc"]')
         self.product_price_in_detail = self.page.locator('//div[@class="inventory_details_price"]')
         self.add_to_cart_button_in_detail = self.page.locator('//button[@id="add-to-cart"]')
+        self.cart_badge = self.page.locator('//span[@class="shopping_cart_badge"]')
 
     def verify_home_page_opened_correctly(self):
         expect(self.burger_menu).to_be_visible()
@@ -38,6 +39,10 @@ class HomePage(BasePage):
 
         for i in range(self.products.count()):
             expect(self.products.nth(i)).to_be_visible()
+            expect(self.product_names.nth(i)).to_be_visible()
+            expect(self.product_descriptions.nth(i)).to_be_visible()
+            expect(self.product_prices.nth(i)).to_be_visible()
+            expect(self.add_to_cart_buttons.nth(i)).to_be_visible()
             print(f"\n<<{i+1} - product is visisble>>")
 
         print("\n<<home page opened correctly>>")
