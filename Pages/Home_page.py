@@ -22,13 +22,14 @@ class HomePage(BasePage):
         self.product_names = self.page.locator('//div[@class="inventory_item_name "]')
         self.product_descriptions = self.page.locator('//div[@class="inventory_item_desc"]')
         self.product_prices = self.page.locator('//div[@class="inventory_item_price"]')
-        self.add_to_cart_buttons = self.page.locator('//button[@class="btn btn_primary btn_small btn_inventory "]')
+        self.add_to_cart_buttons = self.page.locator('//button[text()="Add to cart"]')
         self.back_button_in_detail = self.page.locator('//button[@id="back-to-products"]')
         self.product_name_in_detail = self.page.locator('//div[@data-test="inventory-item-name"]')
         self.product_desc_in_detail = self.page.locator('//div[@data-test="inventory-item-desc"]')
         self.product_price_in_detail = self.page.locator('//div[@class="inventory_details_price"]')
         self.add_to_cart_button_in_detail = self.page.locator('//button[@id="add-to-cart"]')
         self.cart_badge = self.page.locator('//span[@class="shopping_cart_badge"]')
+        self.remove_buttons_in_the_list = self.page.locator('//button[text()="Remove"]')
 
     def verify_home_page_opened_correctly(self):
         expect(self.burger_menu).to_be_visible()
@@ -131,3 +132,16 @@ class HomePage(BasePage):
             expect(self.product_price_in_detail).to_have_text(price)
             print(f"\n<<{i+1} - maxsulot ma'lumotlari list va detailda bir xil>>")
             self.back_button_in_detail.click()
+
+    def add_product_in_to_the_cart(self, product_count):
+        for i in range(product_count):
+            self.add_to_cart_buttons.nth(i).click()
+
+        expect(self.cart_badge).to_have_text(f"{product_count}")
+        print(f"\n<<cart badge have text: {self.cart_badge.text_content()}>>")
+
+        for i in range(self.remove_buttons_in_the_list.count()):
+            expect(self.remove_buttons_in_the_list.nth(i)).to_be_visible()
+
+        print("\n<<Remove buttons are visible>>")
+
