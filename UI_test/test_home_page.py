@@ -1,7 +1,3 @@
-import os
-from dotenv import load_dotenv
-load_dotenv()
-
 def test_sort_product_list_by_price_low_to_high(logged_in_home_page):
     logged_in_home_page.open_home_page()
     logged_in_home_page.sort_product_list_low_to_high()
@@ -26,6 +22,16 @@ def test_list_data_match_with_detail_data(logged_in_home_page):
     logged_in_home_page.open_home_page()
     logged_in_home_page.matching_data_list_and_detail()
 
-def test_add_product_to_the_cart(logged_in_home_page):
+def test_add_product_to_the_cart_in_the_list(logged_in_home_page):
     logged_in_home_page.open_home_page()
-    logged_in_home_page.add_product_in_to_the_cart(3)
+    logged_in_home_page.add_product_to_the_cart_in_the_list(3)
+
+def test_adding_product_to_the_cart(logged_in_home_page):
+    logged_in_home_page.open_home_page()
+    logged_in_home_page.add_product_to_the_cart(4)
+
+
+
+
+
+

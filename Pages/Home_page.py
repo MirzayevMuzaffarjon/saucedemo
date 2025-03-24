@@ -7,9 +7,6 @@ class HomePage(BasePage):
     def __init__(self, page):
         super().__init__(page)
         load_dotenv()
-        self.burger_menu = self.page.locator('//button[@id="react-burger-menu-btn"]')
-        self.logo_in_home_page = self.page.locator('//div[@class="app_logo" and text() = "Swag Labs"]')
-        self.cart_icon = self.page.locator('//div[@id="shopping_cart_container"]')
         self.head_title_Products = self.page.locator('//span[text() = "Products"]')
         self.sort_drop_down= self.page.locator('//select[@class="product_sort_container"]')
         self.products = self.page.locator('//div[@class="inventory_item"]')
@@ -28,17 +25,18 @@ class HomePage(BasePage):
         self.product_desc_in_detail = self.page.locator('//div[@data-test="inventory-item-desc"]')
         self.product_price_in_detail = self.page.locator('//div[@class="inventory_details_price"]')
         self.add_to_cart_button_in_detail = self.page.locator('//button[@id="add-to-cart"]')
-        self.cart_badge = self.page.locator('//span[@class="shopping_cart_badge"]')
+        self.remove_button_in_detail = self.page.locator('//button[@id="remove"]')
         self.remove_buttons_in_the_list = self.page.locator('//button[text()="Remove"]')
 
     def verify_home_page_opened_correctly(self):
         expect(self.burger_menu).to_be_visible()
-        expect(self.logo_in_home_page).to_be_visible()
+        expect(self.logo).to_be_visible()
         expect(self.cart_icon).to_be_visible()
         expect(self.head_title_Products).to_be_visible()
         expect(self.sort_drop_down).to_be_visible()
 
         for i in range(self.products.count()):
+            self.products.nth(i).scroll_into_view_if_needed()
             expect(self.products.nth(i)).to_be_visible()
             expect(self.product_names.nth(i)).to_be_visible()
             expect(self.product_descriptions.nth(i)).to_be_visible()
@@ -133,7 +131,7 @@ class HomePage(BasePage):
             print(f"\n<<{i+1} - maxsulot ma'lumotlari list va detailda bir xil>>")
             self.back_button_in_detail.click()
 
-    def add_product_in_to_the_cart(self, product_count):
+    def add_product_to_the_cart_in_the_list(self, product_count):
         for i in range(product_count):
             self.add_to_cart_buttons.nth(i).click()
 
@@ -144,4 +142,26 @@ class HomePage(BasePage):
             expect(self.remove_buttons_in_the_list.nth(i)).to_be_visible()
 
         print("\n<<Remove buttons are visible>>")
+
+    def add_product_to_the_cart(self, product_count):
+        product_names = []
+        product_prices = []
+        descriptions = []
+        for i in range(product_count):
+            self.product_names.nth(i).click()
+            self.add_to_cart_button_in_detail.click()
+            expect(self.remove_button_in_detail).to_be_visible()
+            product_names.append(self.product_name_in_detail.text_content())
+            descriptions.append(self.product_desc_in_detail.text_content())
+            price = self.product_price_in_detail.text_content()
+            clean_price = float(price.replace("$", ""))
+            product_prices.append(clean_price)
+            self.back_button_in_detail.click()
+
+        expect(self.cart_badge).to_have_text(f"{product_count}")
+        return product_names, descriptions, product_prices
+
+    def open_cart_page(self):
+        self.cart_icon.click()
+
 

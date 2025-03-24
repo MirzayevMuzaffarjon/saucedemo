@@ -2,19 +2,20 @@ import pytest, os
 from playwright.sync_api import sync_playwright, Page, expect
 from Pages.Login_page import LoginPage
 from Pages.Home_page import HomePage
+from Pages.Cart_page import CartPage
 from dotenv import load_dotenv
 load_dotenv()
 
 @pytest.fixture(scope="session")
 def browser():
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False, slow_mo=100)
+        browser = p.chromium.launch(headless=True, slow_mo=100)
         print("\n<<Browser launched>>")
         yield browser
         browser.close()
         print("\n<<Browser closed>>")
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="function")
 def context(browser):
     context = browser.new_context()
     print("\n<<Context opened>>")
@@ -52,7 +53,7 @@ def login_and_save_state():  # context fixture'ini ishlatamiz
         context.close()
         browser.close()
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="function")
 def logged_in_context(login_and_save_state, browser):
     context = browser.new_context(storage_state="state.json")
     print("\n<<logged_in_context opened>>")
@@ -81,3 +82,7 @@ def home_page(page):
 @pytest.fixture()
 def logged_in_home_page(logged_in_page):
     return HomePage(logged_in_page)
+
+@pytest.fixture()
+def cart_page(logged_in_page):
+    return CartPage(logged_in_page)
