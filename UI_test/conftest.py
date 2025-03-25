@@ -3,6 +3,7 @@ from playwright.sync_api import sync_playwright, Page, expect
 from Pages.Login_page import LoginPage
 from Pages.Home_page import HomePage
 from Pages.Cart_page import CartPage
+from Pages.Checkout_page import CheckoutPage
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -86,3 +87,7 @@ def logged_in_home_page(logged_in_page):
 @pytest.fixture()
 def cart_page(logged_in_page):
     return CartPage(logged_in_page)
+
+@pytest.fixture()
+def checkout_page(logged_in_page):
+    return CheckoutPage(logged_in_page)

@@ -163,5 +163,3 @@ class HomePage(BasePage):
 
     def open_cart_page(self):
         self.cart_icon.click()
-
-

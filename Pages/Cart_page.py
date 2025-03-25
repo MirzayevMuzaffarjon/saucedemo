@@ -19,8 +19,6 @@ class CartPage(BasePage):
         self.remove_buttons_in_cart = self.page.locator('//button[text() = "Remove"]')
         self.items_in_cart = self.page.locator('//div[@class="cart_item"]')
 
-
-
     def verify_cart_page_opened_correctly(self):
         expect(self.burger_menu).to_be_visible()
         expect(self.logo).to_be_visible()
@@ -47,3 +45,6 @@ class CartPage(BasePage):
         assert added_names == names
         assert added_descriptions == descs
         assert added_prices == prices
+
+    def open_checkout_page(self):
+        self.checkout_button.click()
