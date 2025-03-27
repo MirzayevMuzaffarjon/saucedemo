@@ -10,7 +10,7 @@ load_dotenv()
 @pytest.fixture(scope="session")
 def browser():
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True, slow_mo=100)
+        browser = p.chromium.launch(headless=False, slow_mo=100)
         print("\n<<Browser launched>>")
         yield browser
         browser.close()
