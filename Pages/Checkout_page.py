@@ -6,6 +6,7 @@ class CheckoutPage(BasePage):
         super().__init__(page)
         self.head_1 = self.page.locator('//span[text() = "Checkout: Your Information"]')
         self.head_2 = self.page.locator('//span[text() = "Checkout: Overview"]')
+        self.head_3 = self.page.locator('//span[text() = "Checkout: Complete!"]')
         self.first_name_input = self.page.locator('//input[@id="first-name"]')
         self.last_name_input = self.page.locator('//input[@id="last-name"]')
         self.postal_code_input = self.page.locator('//input[@id="postal-code"]')
@@ -21,7 +22,10 @@ class CheckoutPage(BasePage):
         self.item_total = self.page.locator('//div[@class="summary_subtotal_label"]')
         self.tax = self.page.locator('//div[@class="summary_tax_label"]')
         self.total_price = self.page.locator('//div[@class="summary_total_label"]')
-        clean_item_total = 0
+        self.back_home_button = self.page.locator('//button[text()="Back Home"]')
+        self.success_text = self.page.locator('//h2[text() = "Thank you for your order!"]')
+        self.success_description = self.page.locator('//div[text()="Your order has been dispatched, and will arrive just as fast as the pony can get there!"]')
+        self.success_image = self.page.locator('//img[@alt="Pony Express"]')
 
 
     def verify_pre_checkout_page_opened_correctly(self):
@@ -48,6 +52,9 @@ class CheckoutPage(BasePage):
         expect(self.head_2).to_be_visible()
         expect(self.qty_label).to_be_visible()
         expect(self.description_label).to_be_visible()
+        expect(self.item_total).to_be_visible()
+        expect(self.tax).to_be_visible()
+        expect(self.total_price).to_be_visible()
         expect(self.cancel_button).to_be_visible()
         expect(self.finish_button).to_be_visible()
 
@@ -56,26 +63,44 @@ class CheckoutPage(BasePage):
             expect(self.product_names.nth(i)).to_be_visible()
             expect(self.product_descriptions.nth(i)).to_be_visible()
             expect(self.product_prices.nth(i)).to_be_visible()
-
         print("\n<<checkout page opened correctly>>")
 
-    def verify_total_product_price(self, total_product_prices_actual ):
-        prices_in_checkout = []
+    def verify_prices_is_right_in_checkout(self, total_product_prices_actual):
+        total_product_price_checkout = 0
+        prices = []
+
+        total_price = self.total_price.text_content()
+        total_price_clean = float(total_price.replace("Total: $",""))
+
+        tax_price = self.tax.text_content()
+        tax_price_clean = float(tax_price.replace("Tax: $",""))
+
+        item_total_price = self.item_total.text_content()
+        item_total_price_clean = float(item_total_price.replace("Item total: $",""))
+
         for i in range(self.items.count()):
             price = self.product_prices.nth(i).text_content()
             clean_price = float(price.replace("$", ""))
-            prices_in_checkout.append(clean_price)
+            prices.append(clean_price)
 
-        item_total = self.item_total.text_content()
-        clean_item_total = float(item_total.replace("Item total: $", ""))
-        print(f"actual total product price: {total_product_prices_actual}")
-        print(f"total product price in checkout: {sum(prices_in_checkout)}")
-        print(f"item total: {clean_item_total}")
-        assert sum(prices_in_checkout) == clean_item_total
-        assert sum (prices_in_checkout) == total_product_prices_actual
+        total_product_price_checkout = sum(prices)
 
-    #def verify_total_price(self):
+        assert total_price_clean == (total_product_price_checkout + tax_price_clean)
+        assert total_price_clean == (total_product_prices_actual + tax_price_clean)
+        assert total_product_prices_actual == item_total_price_clean
+        assert total_product_prices_actual == total_product_price_checkout
 
+        print("\n<<All prices are right in checkout page>>")
 
+    def verify_names_and_descriptions_in_checkout(self, actual_names, actual_descriptions):
+        names = []
+        descriptions = []
+        for i in range(self.items.count()):
+            name = self.product_names.nth(i).text_content()
+            description = self.product_descriptions.nth(i).text_content()
+            names.append(name)
+            descriptions.append(description)
 
+        assert actual_names == names
+        assert actual_descriptions == descriptions
 

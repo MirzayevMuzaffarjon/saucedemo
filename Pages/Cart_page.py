@@ -46,5 +46,5 @@ class CartPage(BasePage):
         assert added_descriptions == descs
         assert added_prices == prices
 
-    def open_checkout_page(self):
+    def open_pre_checkout_page(self):
         self.checkout_button.click()
