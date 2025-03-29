@@ -104,3 +104,16 @@ class CheckoutPage(BasePage):
         assert actual_names == names
         assert actual_descriptions == descriptions
 
+    def click_on_finsh_button(self):
+        self.finish_button.click()
+
+    def verify_success_page_opened_correctly(self):
+        expect(self.head_3).to_be_visible()
+        expect(self.success_image).to_be_visible()
+        expect(self.success_text).to_be_visible()
+        expect(self.success_description).to_be_visible()
+        expect(self.back_home_button).to_be_visible()
+
+    def back_to_home_page(self):
+        self.back_home_button.click()
+
