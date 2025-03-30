@@ -16,7 +16,7 @@ class LoginPage(BasePage):
         self.x_icon_to_close_error_text = self.page.locator('//button[@class="error-button"]')
 
     def verify_login_page_opened_correctly(self):
-        self.page.wait_for_url(os.getenv("LOGIN_PAGE_URL"))
+        self.page.wait_for_url(os.getenv("BASEURL"))
         expect(self.logo_in_login_page).to_be_visible()
         expect(self.username_input).to_be_visible()
         expect(self.password_input).to_be_visible()
