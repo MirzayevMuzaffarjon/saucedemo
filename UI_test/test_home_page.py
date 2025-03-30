@@ -1,4 +1,4 @@
-import allure, pytest
+import allure
 
 @allure.title("sort product list low to high by price")
 def test_sort_product_list_by_price_low_to_high(logged_in_home_page):

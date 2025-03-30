@@ -29,6 +29,7 @@ class HomePage(BasePage):
         self.remove_buttons_in_the_list = self.page.locator('//button[text()="Remove"]')
 
     def verify_home_page_opened_correctly(self):
+        self.page.wait_for_url(os.getenv("HOME_PAGE_URL"))
         expect(self.burger_menu).to_be_visible()
         expect(self.logo).to_be_visible()
         expect(self.cart_icon).to_be_visible()

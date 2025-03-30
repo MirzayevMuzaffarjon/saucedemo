@@ -8,6 +8,7 @@ def test_login_as_standard_user(login_page, home_page):
     login_page.login_with(os.getenv("STANDARD_USERNAME"), os.getenv("PASSWORD"))
     home_page.verify_home_page_opened_correctly()
 
+
 @allure.title("login with incorrect password")
 def test_login_with_incorrect_password(login_page):
     login_page.open_login_page()
