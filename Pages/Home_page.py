@@ -29,7 +29,6 @@ class HomePage(BasePage):
         self.remove_buttons_in_the_list = self.page.locator('//button[text()="Remove"]')
 
     def verify_home_page_opened_correctly(self):
-        self.page.wait_for_url(os.getenv("HOME_PAGE_URL"))
         expect(self.burger_menu).to_be_visible()
         expect(self.logo).to_be_visible()
         expect(self.cart_icon).to_be_visible()
@@ -44,7 +43,6 @@ class HomePage(BasePage):
             expect(self.product_prices.nth(i)).to_be_visible()
             expect(self.add_to_cart_buttons.nth(i)).to_be_visible()
             print(f"\n<<{i+1} - product is visisble>>")
-
         print("\n<<home page opened correctly>>")
 
     def open_home_page(self):
@@ -59,16 +57,14 @@ class HomePage(BasePage):
     def sort_product_list_low_to_high(self):
         self.sort_drop_down.click()
         self.sort_drop_down.select_option(self.sort_option_low_to_high)
-        expect(self.active_option).to_have_text(self.sort_option_low_to_high)
         print(f"\n<<{self.sort_option_low_to_high} tanlandi va active holatda>>")
 
     def sort_product_list_high_to_low(self):
         self.sort_drop_down.click()
         self.sort_drop_down.select_option(self.sort_option_high_to_low)
-        expect(self.active_option).to_have_text(self.sort_option_high_to_low)
         print(f"\n<<{self.sort_option_high_to_low} tanlandi va active holatda>>")
 
-    def verify_product_list_price_sorted(self, low_to_high_or_high_to_low):
+    def verify_product_list_sorted_by_price(self, low_to_high_or_high_to_low):
         product_prices_list = []
         for i in range(self.product_prices.count()):
             price_text = self.product_prices.nth(i).text_content()
@@ -77,12 +73,14 @@ class HomePage(BasePage):
 
         if low_to_high_or_high_to_low == "low_to_high":
             expected_list = sorted(product_prices_list)
+            expect(self.active_option).to_have_text(self.sort_option_low_to_high)
             assert product_prices_list == expected_list
             print(f"\nexpected product list: {expected_list}")
             print(f"\nactual product list: {product_prices_list}")
 
         elif low_to_high_or_high_to_low == "high_to_low":
             expected_list = sorted(product_prices_list, reverse=True)
+            expect(self.active_option).to_have_text(self.sort_option_high_to_low)
             assert product_prices_list == expected_list
             print(f"\nexpected product list: {expected_list}")
             print(f"\nactual product list: {product_prices_list}")
@@ -95,12 +93,9 @@ class HomePage(BasePage):
             self.sort_drop_down.select_option(self.sort_option_a_to_z)
             print("\n<<a to z bo'yicha sort qilish tanlandi>>")
 
-        expect(self.active_option).to_have_text(self.sort_option_a_to_z)
-
     def sort_product_list_z_to_a(self):
         self.sort_drop_down.click()
         self.sort_drop_down.select_option(self.sort_option_z_to_a)
-        expect(self.active_option).to_have_text(self.sort_option_z_to_a)
         print("\n<<z_to_a sort option selected and actual>>")
 
     def verify_product_list_sorted(self, a_to_z_or_z_to_a):
@@ -110,17 +105,19 @@ class HomePage(BasePage):
 
         if a_to_z_or_z_to_a == "a_to_z":
             expected_sorted_list = sorted(product_name_list)
+            expect(self.active_option).to_have_text(self.sort_option_a_to_z)
             assert product_name_list == expected_sorted_list
             print(f"\nactual: {product_name_list}")
             print(f"\nexpected: {expected_sorted_list}")
 
         elif a_to_z_or_z_to_a == "z_to_a":
             expected_sorted_list = sorted(product_name_list, reverse=True)
+            expect(self.active_option).to_have_text(self.sort_option_z_to_a)
             assert product_name_list == expected_sorted_list
             print(f"\nactual: {product_name_list}")
             print(f"\nexpected: {expected_sorted_list}")
 
-    def matching_data_list_and_detail(self):
+    def verify_matching_data_list_and_detail(self):
         for i in range(self.products.count()):
             name = self.product_names.nth(i).text_content()
             desc = self.product_descriptions.nth(i).text_content()
@@ -135,14 +132,6 @@ class HomePage(BasePage):
     def add_product_to_the_cart_in_the_list(self, product_count):
         for i in range(product_count):
             self.add_to_cart_buttons.nth(i).click()
-
-        expect(self.cart_badge).to_have_text(f"{product_count}")
-        print(f"\n<<cart badge have text: {self.cart_badge.text_content()}>>")
-
-        for i in range(self.remove_buttons_in_the_list.count()):
-            expect(self.remove_buttons_in_the_list.nth(i)).to_be_visible()
-
-        print("\n<<Remove buttons are visible>>")
 
     def add_product_to_the_cart(self, product_count):
         product_names = []
@@ -159,8 +148,17 @@ class HomePage(BasePage):
             product_prices.append(clean_price)
             self.back_button_in_detail.click()
 
-        expect(self.cart_badge).to_have_text(f"{product_count}")
         return product_names, descriptions, product_prices
+
+    def verify_cart_badge_have_count(self, count):
+        expect(self.cart_badge).to_have_text(count)
+
+    def verify_remove_buttons_in_the_list(self, count):
+        assert self.remove_buttons_in_the_list.count() == count
+
+        for i in range(self.remove_buttons_in_the_list.count()):
+            expect(self.remove_buttons_in_the_list.nth(i)).to_be_visible()
+
 
     def open_cart_page(self):
         self.cart_icon.click()

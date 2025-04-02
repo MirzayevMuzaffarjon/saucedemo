@@ -1,4 +1,4 @@
-import os, allure, pytest
+import os, allure
 from dotenv import load_dotenv
 load_dotenv()
 

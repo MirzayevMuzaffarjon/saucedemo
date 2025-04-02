@@ -30,7 +30,7 @@ class CartPage(BasePage):
         expect(self.descriptions_label).to_be_visible()
         print("\n<<cart page opened correctly>>")
 
-    def verify_products_added_correctly(self, names, descs, prices):
+    def verify_products_added_correctly(self, names, descriptions, prices):
         for i in range(self.items_in_cart.count()):
             added_names.append(self.product_names_in_cart.nth(i).text_content())
             added_descriptions.append(self.product_descriptions_in_cart.nth(i).text_content())
@@ -39,11 +39,11 @@ class CartPage(BasePage):
             added_prices.append(clean_price)
 
         print(f"actual names: {names} \nnames_in_cart: {added_names} \n \n")
-        print(f"actual descs: {descs} \ndescs_in_cart: {added_descriptions} \n \n")
+        print(f"actual descs: {descriptions} \ndescs_in_cart: {added_descriptions} \n \n")
         print(f"actual prices: {prices} \nprices_in_cart: {added_prices} \n \n")
 
         assert added_names == names
-        assert added_descriptions == descs
+        assert added_descriptions == descriptions
         assert added_prices == prices
 
     def open_pre_checkout_page(self):

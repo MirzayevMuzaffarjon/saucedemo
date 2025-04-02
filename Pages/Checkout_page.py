@@ -116,4 +116,3 @@ class CheckoutPage(BasePage):
 
     def back_to_home_page(self):
         self.back_home_button.click()
-
