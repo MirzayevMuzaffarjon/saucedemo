@@ -65,6 +65,9 @@ class CheckoutPage(BasePage):
             expect(self.product_prices.nth(i)).to_be_visible()
         print("\n<<checkout page opened correctly>>")
 
+    def verify_product_count_in_checkout_should_equal(self, count):
+        assert self.items.count() == count
+
     def verify_prices_is_right_in_checkout(self, total_product_prices_actual):
         total_product_price_checkout = 0
         prices = []
