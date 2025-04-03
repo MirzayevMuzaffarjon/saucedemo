@@ -1,6 +1,4 @@
 import os, allure
-from dotenv import load_dotenv
-load_dotenv()
 
 @allure.title("login as standard user")
 def test_login_as_standard_user(login_page, home_page):

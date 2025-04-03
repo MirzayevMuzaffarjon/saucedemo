@@ -1,6 +1,7 @@
-from Pages.Base_page import BasePage, expect
+from Pages.Base_page import BasePage
 import os
 from dotenv import load_dotenv
+from playwright.sync_api import expect
 
 class LoginPage(BasePage):
     def __init__(self, page):

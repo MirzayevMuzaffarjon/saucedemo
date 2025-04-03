@@ -159,6 +159,5 @@ class HomePage(BasePage):
         for i in range(self.remove_buttons_in_the_list.count()):
             expect(self.remove_buttons_in_the_list.nth(i)).to_be_visible()
 
-
     def open_cart_page(self):
         self.cart_icon.click()
