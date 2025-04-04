@@ -31,7 +31,7 @@ jobs:
           echo "LOCKED_USERNAME=${{ secrets.LOCKED_USERNAME }}" >> .env
 
       - name: Run your tests
-        run: pytest -s -v
+        run: pytest -s -v -n 6
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
