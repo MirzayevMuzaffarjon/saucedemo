@@ -31,7 +31,7 @@ jobs:
           echo "LOCKED_USERNAME=${{ secrets.LOCKED_USERNAME }}" >> .env
 
       - name: Run your tests
-        run: pytest -v -n 6 --alluredir=allure-results --browser chromium --browser firefox --browser webkit
+        run: pytest -v -n 6 --html=report.html
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
