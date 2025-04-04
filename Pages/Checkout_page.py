@@ -27,7 +27,6 @@ class CheckoutPage(BasePage):
         self.success_description = self.page.locator('//div[text()="Your order has been dispatched, and will arrive just as fast as the pony can get there!"]')
         self.success_image = self.page.locator('//img[@alt="Pony Express"]')
 
-
     def verify_pre_checkout_page_opened_correctly(self):
         expect(self.head_1).to_be_visible()
         expect(self.first_name_input).to_be_visible()
@@ -35,7 +34,7 @@ class CheckoutPage(BasePage):
         expect(self.postal_code_input).to_be_visible()
         expect(self.cancel_button).to_be_visible()
         expect(self.continue_button).to_be_visible()
-        print("\n<<pre checkout page opened correctly>>")
+        print("\n<<pre_checkout page opened correctly>>")
 
     def fill_inputs(self, first_name, last_name, postal_code):
         self.first_name_input.click()
@@ -44,9 +43,11 @@ class CheckoutPage(BasePage):
         self.last_name_input.fill(last_name)
         self.postal_code_input.click()
         self.postal_code_input.fill(postal_code)
+        print(f"\n<<filled inputs in pre checkout page>>")
 
     def open_checkout_page(self):
         self.continue_button.click()
+        print(f"\n<<navigated to the checkout page>>")
 
     def verify_checkout_page_opened_correctly(self):
         expect(self.head_2).to_be_visible()
@@ -67,6 +68,7 @@ class CheckoutPage(BasePage):
 
     def verify_product_count_in_checkout_should_equal(self, count):
         assert self.items.count() == count
+        print(f"\n<<verified product count in checkout: {self.items.count()}, expected: {count}>>")
 
     def verify_prices_is_right_in_checkout(self, total_product_prices_actual):
         total_product_price_checkout = 0
@@ -107,8 +109,11 @@ class CheckoutPage(BasePage):
         assert actual_names == names
         assert actual_descriptions == descriptions
 
+        print(f"\nverified names and descriptions")
+
     def click_on_finsh_button(self):
         self.finish_button.click()
+        print(f"\n<<clicked on finish button>>")
 
     def verify_success_page_opened_correctly(self):
         expect(self.head_3).to_be_visible()
@@ -116,6 +121,8 @@ class CheckoutPage(BasePage):
         expect(self.success_text).to_be_visible()
         expect(self.success_description).to_be_visible()
         expect(self.back_home_button).to_be_visible()
+        print(f"\n<<success page opened correctly>>")
 
     def back_to_home_page(self):
         self.back_home_button.click()
+        print(f"\n<<navigated to home page>>")

@@ -49,7 +49,7 @@ def login_and_save_state():  # context fixture'ini ishlatamiz
         home_page.verify_home_page_opened_correctly()
 
         context.storage_state(path="state.json")
-        print("\n<<state saqlandi>>")
+        print("\n<<state saved>>")
         page.close()
         context.close()
         browser.close()

@@ -42,8 +42,8 @@ class HomePage(BasePage):
             expect(self.product_descriptions.nth(i)).to_be_visible()
             expect(self.product_prices.nth(i)).to_be_visible()
             expect(self.add_to_cart_buttons.nth(i)).to_be_visible()
-            print(f"\n<<{i+1} - product is visisble>>")
-        print("\n<<home page opened correctly>>")
+            print(f"\n<<{i+1} - product is visible>>")
+        print("\n<<opening home page verified correctly>>")
 
     def open_home_page(self):
         self.open_url(os.getenv("HOME_PAGE_URL"))
@@ -53,16 +53,17 @@ class HomePage(BasePage):
     def log_out(self):
         self.burger_menu.click()
         self.log_out_button.click()
+        print(f"\n<<log_out function completed>>")
 
     def sort_product_list_low_to_high(self):
         self.sort_drop_down.click()
         self.sort_drop_down.select_option(self.sort_option_low_to_high)
-        print(f"\n<<{self.sort_option_low_to_high} tanlandi va active holatda>>")
+        print(f"\n<<{self.sort_option_low_to_high} selected and active>>")
 
     def sort_product_list_high_to_low(self):
         self.sort_drop_down.click()
         self.sort_drop_down.select_option(self.sort_option_high_to_low)
-        print(f"\n<<{self.sort_option_high_to_low} tanlandi va active holatda>>")
+        print(f"\n<<{self.sort_option_high_to_low} selected and active>>")
 
     def verify_product_list_sorted_by_price(self, low_to_high_or_high_to_low):
         product_prices_list = []
@@ -75,23 +76,25 @@ class HomePage(BasePage):
             expected_list = sorted(product_prices_list)
             expect(self.active_option).to_have_text(self.sort_option_low_to_high)
             assert product_prices_list == expected_list
-            print(f"\nexpected product list: {expected_list}")
-            print(f"\nactual product list: {product_prices_list}")
+            print(f"\n<<product list sorted by price low to high>>")
+            print(f"\n<<expected product list: {expected_list}>>")
+            print(f"\n<<actual product list: {product_prices_list}>>")
 
         elif low_to_high_or_high_to_low == "high_to_low":
             expected_list = sorted(product_prices_list, reverse=True)
             expect(self.active_option).to_have_text(self.sort_option_high_to_low)
             assert product_prices_list == expected_list
-            print(f"\nexpected product list: {expected_list}")
-            print(f"\nactual product list: {product_prices_list}")
+            print(f"\n<<product list sorted by price high to low>>")
+            print(f"\n<<expected product list: {expected_list}>>")
+            print(f"\n<<actual product list: {product_prices_list}>>")
 
     def sort_product_list_a_to_z(self):
         if self.active_option.text_content() == self.sort_option_a_to_z:
-            print("\n<<a to z bo'yicha sort qilish tanlangan>>")
+            print("\n<<already selected option a_to_z>>")
         else:
             self.sort_drop_down.click()
             self.sort_drop_down.select_option(self.sort_option_a_to_z)
-            print("\n<<a to z bo'yicha sort qilish tanlandi>>")
+            print("\n<<selected option a_to_z>>")
 
     def sort_product_list_z_to_a(self):
         self.sort_drop_down.click()
@@ -107,15 +110,17 @@ class HomePage(BasePage):
             expected_sorted_list = sorted(product_name_list)
             expect(self.active_option).to_have_text(self.sort_option_a_to_z)
             assert product_name_list == expected_sorted_list
-            print(f"\nactual: {product_name_list}")
-            print(f"\nexpected: {expected_sorted_list}")
+            print(f"\n<<product list sorted a to z>>")
+            print(f"\n<<actual: {product_name_list}>>")
+            print(f"\n<<expected: {expected_sorted_list}>>")
 
         elif a_to_z_or_z_to_a == "z_to_a":
             expected_sorted_list = sorted(product_name_list, reverse=True)
             expect(self.active_option).to_have_text(self.sort_option_z_to_a)
             assert product_name_list == expected_sorted_list
-            print(f"\nactual: {product_name_list}")
-            print(f"\nexpected: {expected_sorted_list}")
+            print(f"\n<<product list sorted z to a>>")
+            print(f"\n<<actual: {product_name_list}>>")
+            print(f"\n<<expected: {expected_sorted_list}>>")
 
     def verify_matching_data_list_and_detail(self):
         for i in range(self.products.count()):
@@ -126,12 +131,13 @@ class HomePage(BasePage):
             expect(self.product_name_in_detail).to_have_text(name)
             expect(self.product_desc_in_detail).to_have_text(desc)
             expect(self.product_price_in_detail).to_have_text(price)
-            print(f"\n<<{i+1} - maxsulot ma'lumotlari list va detailda bir xil>>")
+            print(f"\n<<{i+1} - product dates matches list and detail>>")
             self.back_button_in_detail.click()
 
     def add_product_to_the_cart_in_the_list(self, product_count):
         for i in range(product_count):
             self.add_to_cart_buttons.nth(i).click()
+        print(f"\n<<{product_count} items added to the cart from list>>")
 
     def add_product_to_the_cart(self, product_count):
         product_names = []
@@ -148,16 +154,19 @@ class HomePage(BasePage):
             product_prices.append(clean_price)
             self.back_button_in_detail.click()
 
+        print(f"\n<<{product_count} items added to the cart>>")
         return product_names, descriptions, product_prices
 
     def verify_cart_badge_have_count(self, count):
         expect(self.cart_badge).to_have_text(count)
+        print(f"\n<<verified cart badge have text {self.cart_badge.text_content()}>>")
 
     def verify_remove_buttons_in_the_list(self, count):
         assert self.remove_buttons_in_the_list.count() == count
-
         for i in range(self.remove_buttons_in_the_list.count()):
             expect(self.remove_buttons_in_the_list.nth(i)).to_be_visible()
+        print(f"\n<<verified remove buttons in the list. count = {count}>>")
 
     def open_cart_page(self):
         self.cart_icon.click()
+        print(f"\n<<navigated to the cart page>>")

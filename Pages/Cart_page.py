@@ -38,13 +38,16 @@ class CartPage(BasePage):
             clean_price = float(product_price.replace("$", ""))
             added_prices.append(clean_price)
 
-        print(f"actual names: {names} \nnames_in_cart: {added_names} \n \n")
-        print(f"actual descs: {descriptions} \ndescs_in_cart: {added_descriptions} \n \n")
-        print(f"actual prices: {prices} \nprices_in_cart: {added_prices} \n \n")
+        print(f"\n<<actual names: {names}>> \n<<names_in_cart: {added_names}>> \n \n")
+        print(f"\n<<actual descs: {descriptions}>> \n<<descs_in_cart: {added_descriptions}>> \n \n")
+        print(f"\n<<actual prices: {prices}>> \n<<prices_in_cart: {added_prices}>> \n \n")
 
         assert added_names == names
         assert added_descriptions == descriptions
         assert added_prices == prices
 
+        print(f"\n<<verified products added correctly to the cart>>")
+
     def open_pre_checkout_page(self):
         self.checkout_button.click()
+        print(f"\n<<navigated to the pre_checkout page>>")
