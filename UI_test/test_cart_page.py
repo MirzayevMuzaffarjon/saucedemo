@@ -1,4 +1,4 @@
-import  allure, pytest
+import  allure
 
 @allure.title("opening cart page")
 def test_opening_cart_page(logged_in_home_page, cart_page):
