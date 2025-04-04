@@ -26,3 +26,9 @@ traces/
 .idea/
 
 assets
+
+report.html
+
+allure-results
+
+state.json
