@@ -25,12 +25,10 @@ traces/
 .vscode/
 .idea/
 
+
+#additional files
 assets
-
 report.html
-
 allure-results
-
 state.json
-
 UI_test/state.json
