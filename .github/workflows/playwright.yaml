@@ -66,8 +66,9 @@ jobs:
 
       - name: Install Allure Commandline
         run: |
+          sudo apt-add-repository ppa:qameta/allure
           sudo apt-get update
-          sudo apt-get install allure  # Allure command line'ni o'rnatish
+          sudo apt-get install allure
 
       - name: Ensure browsers are installed
         run: python -m playwright install --with-deps
