@@ -15,4 +15,3 @@ class BasePage:
     def wait(self, time: int):
         self.page.wait_for_timeout(time*1000)
         print(f"\n<<waited {time*1000} second>>")
-
