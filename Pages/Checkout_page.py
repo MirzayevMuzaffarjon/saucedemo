@@ -33,7 +33,7 @@ class CheckoutPage(BasePage):
         expect(self.last_name_input).to_be_visible()
         expect(self.postal_code_input).to_be_visible()
         expect(self.cancel_button).to_be_visible()
-        expect(self.continue_button).not_to_be_visible()
+        expect(self.continue_button).to_be_visible()
         print("\n<<pre_checkout page opened correctly>>")
 
     def fill_inputs(self, first_name, last_name, postal_code):
