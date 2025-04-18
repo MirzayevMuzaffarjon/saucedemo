@@ -10,7 +10,7 @@ load_dotenv()
 @pytest.fixture(scope="session")
 def browser():
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True, slow_mo=100)
+        browser = p.chromium.launch(headless=False, slow_mo=100)
         print("\n<<Browser launched>>")
         yield browser
         browser.close()
@@ -18,7 +18,9 @@ def browser():
 
 @pytest.fixture(scope="function")
 def context(browser):
-    context = browser.new_context()
+    context = browser.new_context(
+        viewport={"width": 1920, "height": 1080}
+    )
     print("\n<<Context opened>>")
     yield context
     context.close()
@@ -56,7 +58,10 @@ def login_and_save_state():  # context fixture'ini ishlatamiz
 
 @pytest.fixture(scope="function")
 def logged_in_context(login_and_save_state, browser):
-    context = browser.new_context(storage_state="state.json")
+    context = browser.new_context(
+        storage_state="state.json",
+        viewport={"width": 1920, "height": 1080}
+    )
     print("\n<<logged_in_context opened>>")
     yield context
     context.close()
