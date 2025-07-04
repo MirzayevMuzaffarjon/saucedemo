@@ -1,5 +1,5 @@
 from Pages.Base_page import BasePage
-import os
+import os, logging
 from dotenv import load_dotenv
 from playwright.sync_api import expect
 
@@ -23,7 +23,7 @@ class LoginPage(BasePage):
         expect(self.login_submit_button).to_be_visible()
         expect(self.login_usernames_list).to_be_visible()
         expect(self.login_passwords_list).to_be_visible()
-        print("\n<<Login page opened correctly>>")
+        logging.info("\n---Login page opened correctly")
 
     def login_with(self, username, password):
         self.username_input.click()
@@ -31,15 +31,15 @@ class LoginPage(BasePage):
         self.password_input.click()
         self.password_input.fill(password)
         self.login_submit_button.click()
-        print("\n<<Filled username, password and clicked submit button>>")
+        logging.info("\n---Filled username, password and clicked submit button")
 
     def verify_login_filed(self):
         expect(self.filed_login_error_text).to_be_visible()
         expect(self.x_icon_to_close_error_text).to_be_visible()
-        print("\n<<Login failed>>")
+        logging.info("\n---Login failed")
 
     def open_login_page(self):
         self.open_url(os.getenv("BASEURL"))
         self.page.wait_for_url(os.getenv("BASEURL"))
         self.verify_login_page_opened_correctly()
-        print("\n<<login page opened correctly>>")
+        logging.info("\n---login page opened correctly")

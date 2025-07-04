@@ -12,11 +12,10 @@ class BasePage:
     def open_url(self, url):
         try:
             self.page.goto(url, wait_until="networkidle")
-            print(f"\n---opened url: {url}")
 
         except Exception as e:
-            logging.warning(f"\n---open_url function is fail. More: {e}")
+            logging.warning(f"\n---open_url function is fail. URL:{url} More: {e}")
 
     def wait(self, time: int):
         self.page.wait_for_timeout(time*1000)
-        print(f"\n<<waited {time*1000} second>>")
+        logging.info(f"\n---Waited {time*1000} second")
