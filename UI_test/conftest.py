@@ -35,7 +35,7 @@ def page(context):
 #-----------------------------------------------------------------------------
 
 @pytest.fixture(scope="session")
-def login_and_save_state():  # context fixture'ini ishlatamiz
+def login_and_save_state():
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True, slow_mo=100)
         context = browser.new_context()
