@@ -32,7 +32,7 @@ jobs:
 
       - name: Run your tests
         run: |
-          pytest -s -v -n auto --html=report.html --self-contained-html || true
+          pytest -s -v -n auto --video=retain-on-failure --html=report.html --self-contained-html || true
 
       - name: Upload HTML report
         uses: actions/upload-artifact@v4
