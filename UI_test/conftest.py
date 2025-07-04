@@ -27,8 +27,6 @@ def page(context):
     yield page
     page.close()
 
-#-----------------------------------------------------------------------------
-
 @pytest.fixture(scope="session")
 def login_and_save_state():
     with sync_playwright() as p:
@@ -61,8 +59,6 @@ def logged_in_page(logged_in_context):
     logged_in_page = logged_in_context.new_page()
     yield logged_in_page
     logged_in_page.close()
-
-#----------------------------------------------------------------------------------------
 
 @pytest.fixture()
 def login_page(page):
