@@ -11,10 +11,8 @@ load_dotenv()
 def browser():
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True, slow_mo=100)
-        print("\n<<Browser launched>>")
         yield browser
         browser.close()
-        print("\n<<Browser closed>>")
 
 @pytest.fixture(scope="function")
 def context(browser):
@@ -22,15 +20,12 @@ def context(browser):
     print("\n<<Context opened>>")
     yield context
     context.close()
-    print("\n<<Context closed>>")
 
 @pytest.fixture(scope="function")
 def page(context):
     page = context.new_page()
-    print("\n<<Page opened>>")
     yield page
     page.close()
-    print("\n<<Page closed>>")
 
 #-----------------------------------------------------------------------------
 
@@ -49,7 +44,6 @@ def login_and_save_state():
         home_page.verify_home_page_opened_correctly()
 
         context.storage_state(path="state.json")
-        print("\n<<state saved>>")
         page.close()
         context.close()
         browser.close()
@@ -59,18 +53,14 @@ def logged_in_context(login_and_save_state, browser):
     context = browser.new_context(
         storage_state="state.json"
     )
-    print("\n<<logged_in_context opened>>")
     yield context
     context.close()
-    print("\n<<logged_in_context closed>>")
 
 @pytest.fixture(scope="function")
 def logged_in_page(logged_in_context):
     logged_in_page = logged_in_context.new_page()
-    print("\n<<logged in page opened>>")
     yield logged_in_page
     logged_in_page.close()
-    print("\n<<logged in page closed>>")
 
 #----------------------------------------------------------------------------------------
 
